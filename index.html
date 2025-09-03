@@ -77,6 +77,48 @@
     transform: scale(1.2); /* grossit de 20% */
   }
 }
+<script>
+  // Base logique de la scène (déjà le cas chez toi)
+  const W = 480, H = 270;
+
+  // Récupère/assure les refs des calques
+  const bg          = document.getElementById('bg');
+  const fg          = document.getElementById('fg');
+  const screenLayer = document.getElementById('screenLayer');
+
+  // Fonction de scale "mix contain + un peu cover" sur mobile
+  function scale() {
+    const contain  = Math.min(innerWidth / W, innerHeight / H);
+    const isMobile = matchMedia("(max-width: 600px)").matches || matchMedia("(pointer:coarse)").matches;
+    if (!isMobile) return contain;
+
+    const cover = Math.max(innerWidth / W, innerHeight / H);
+    // rendu visible mais doux (ajuste 0.4 selon ton goût)
+    return contain * 0.6 + cover * 0.4;
+  }
+
+  // Centre & applique le scale aux calques
+  function applyScale() {
+    const s = scale();
+    for (const el of [bg, screenLayer, fg]) {
+      if (!el) continue;                 // si un calque manque, on skip
+      el.style.transform = `scale(${s})`;
+      el.style.left = ((innerWidth  - W * s) / 2) + 'px';
+      el.style.top  = ((innerHeight - H * s) / 2) + 'px';
+      el.style.position = 'absolute';    // sécurité si pas déjà en absolute
+      el.style.transformOrigin = '0 0';  // ancrage en haut-gauche (cohérent avec ton code)
+    }
+    // si tu as une fonction placeScreen() ailleurs, on la rappelle
+    if (typeof placeScreen === 'function') placeScreen();
+  }
+
+  // Recalcule au chargement et au resize
+  addEventListener('load', applyScale);
+  addEventListener('resize', applyScale);
+
+  // Appel immédiat au cas où le script est injecté après le chargement
+  applyScale();
+</script>
 
 
 </style>
