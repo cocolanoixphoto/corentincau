@@ -130,7 +130,8 @@ const SPRITES={"Up": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYA
 function scale(){return Math.min(innerWidth/W, innerHeight/H)}
 const screenLayer = document.getElementById('screenLayer');
 function applyScale(){
-  const s=scale(); 
+    const mobileBoost = matchMedia("(max-width: 600px)").matches ? 1.12 : 1; // ajuste 1.05–1.25
+    const s = scale() * mobileBoost; 
   for(const el of [bg,screenLayer,fg]){
     el.style.transform=`scale(${s})`; 
     el.style.left=((innerWidth-W*s)/2)+'px'; 
