@@ -20,17 +20,76 @@
       height:100%;
       background:#fff;
       color:#111;
-      font:16px/1.5 "MIXONE", system-ui, Segoe UI, Roboto, Arial;
+      font:16px/1.5 "MIXONE", system-ui, Segoe UI, Roboto, Arial, sans-serif;
     }
-    .wrap{min-height:100%;display:grid;place-items:center;padding:24px}
-    .card{width:min(var(--max),92vw);border:1px solid #ddd;border-radius:16px;padding:28px 24px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
-    h1{margin:0 0 12px 0;font-size:clamp(22px,3.2vw,32px)}
-    p{margin:0 0 18px 0;color:#444}
-    ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
-    li{border:1px solid #eee;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
-    a{color:#111;text-decoration:none}
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+    .card{
+      width:min(var(--max),92vw);
+      border:1px solid #ddd;
+      border-radius:16px;
+      padding:28px 24px;
+      box-shadow:0 10px 30px rgba(0,0,0,.06);
+      background:#fff;
+    }
+    h1{
+      margin:0 0 12px 0;
+      font-size:clamp(22px,3.2vw,32px);
+      text-align:center;
+    }
+    p{
+      margin:0 0 18px 0;
+      color:#444;
+      text-align:center;
+    }
+    ul{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      gap:10px;
+    }
+    li{
+      border:1px solid #eee;
+      border-radius:12px;
+      padding:14px 16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:clamp(14px, 4vw, 18px);
+    }
+    a{
+      color:#111;
+      text-decoration:none;
+    }
     a:hover{text-decoration:underline}
-    .back{display:inline-block;margin-top:18px}
+    .back{
+      display:block;
+      margin-top:18px;
+      text-align:center;
+    }
+
+    /* ——— Ajustements mobile ——— */
+    @media (max-width: 600px) {
+      .card{
+        width:100%;
+        padding:20px 16px;
+        border-radius:12px;
+      }
+      li{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:6px;
+      }
+      .back{
+        margin-top:24px;
+        font-size:14px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -53,4 +112,3 @@
   </div>
 </body>
 </html>
-
