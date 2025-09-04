@@ -124,17 +124,6 @@ const SCREEN_NORM = {
   h:  16/270
 };
 
-// Placement de l'écran
-
-function placeScreen(){
-  const ch = world.chamber; if (!ch) return;
-  const r = screenRect(ch);      // {x,y,w,h} en pixels dans la base 480×270
-  const el = document.getElementById('screen');
-  el.style.left = r.x + 'px';
-  el.style.top  = r.y + 'px';
-  el.style.width  = r.w + 'px';
-  el.style.height = r.h + 'px';
-}
 // load helper
 function loadImg(src){return new Promise((res,rej)=>{const i=new Image(); i.onload=()=>res(i); i.onerror=()=>rej(new Error('load '+src)); i.src=src;})}
 
