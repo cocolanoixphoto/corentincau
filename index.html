@@ -124,21 +124,6 @@ const SCREEN_NORM = {
   h:  16/270
 };
 
-// scale & layout
-function scale(){return Math.min(innerWidth/W, innerHeight/H)}
-const screenLayer = document.getElementById('screenLayer');
-function applyScale(){
-    const mobileBoost = matchMedia("(max-width: 600px)").matches ? 1.12 : 1; // ajuste 1.05–1.25
-    const s = scale() * mobileBoost; 
-  for(const el of [bg,screenLayer,fg]){
-    el.style.transform=`scale(${s})`; 
-    el.style.left=((innerWidth-W*s)/2)+'px'; 
-    el.style.top=((innerHeight-H*s)/2)+'px';
-    } 
-    placeScreen(); 
-}
-addEventListener('resize',applyScale);
-
 // Placement de l'écran
 
 function placeScreen(){
