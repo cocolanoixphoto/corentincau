@@ -349,8 +349,8 @@ function placeScreen(){
   el.style.transform = `translate(var(--tx), var(--ty)) rotate(-3.6deg) skew(2deg,0)`;
 }
 
-  // ---- FORCE ZOOM GLOBAL (fonctionne même si d'autres scripts scalent déjà) ----
-  function () {
+// ---- FORCE ZOOM GLOBAL (fonctionne même si d'autres scripts scalent déjà) ----
+  (function () {
     // Dimensions de référence de ta scène
     const W = 480, H = 270;
 
@@ -398,7 +398,7 @@ function placeScreen(){
 
     // Appel immédiat au cas où le script est injecté après le load
     applyNowAndAfter();
-  }();
+  })();
 
 
 </script>
