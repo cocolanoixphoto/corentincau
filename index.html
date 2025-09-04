@@ -117,6 +117,34 @@ b.setTransform(DPR,0,0,DPR,0,0); x.setTransform(DPR,0,0,DPR,0,0);
 b.imageSmoothingEnabled=true; b.imageSmoothingQuality='high';
 x.imageSmoothingEnabled=true; x.imageSmoothingQuality='high';
 
+ // --- ÉCHELLE UNIQUE (desktop = contain / mobile = contain boosté) ---
+  function scale(){
+    const contain = Math.min(innerWidth / W, innerHeight / H);
+    const cover   = Math.max(innerWidth / W, innerHeight / H);
+    const isMobile = (innerWidth <= 768) || matchMedia("(pointer:coarse)").matches;
+    if (!isMobile) return contain;
+
+    // minimum +20% + un mix cover pour que ce soit visible
+    const mix = contain * 0.6 + cover * 0.4;
+    return Math.max(contain * 1.20, mix);
+  }
+
+  function applyScale(){
+    const s = scale();
+    for (const el of [bg, screenLayer, fg]){
+      if (!el) continue;
+      el.style.position = 'absolute';
+      el.style.transformOrigin = '0 0';
+      el.style.transform = `scale(${s})`;
+      el.style.left = ((innerWidth - W * s) / 2) + 'px';
+      el.style.top  = ((innerHeight - H * s) / 2) + 'px';
+    }
+    if (typeof placeScreen === 'function') placeScreen();
+  }
+
+  addEventListener('load',  applyScale);
+  addEventListener('resize',applyScale);
+
 const SCREEN_NORM = {
   x: 261.5/480,
   y:  116/270,
