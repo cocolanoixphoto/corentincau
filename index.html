@@ -148,43 +148,20 @@
   
   function applyScale(){
     const s = scale();
-    const sceneLeft = (innerWidth  - W * s) / 2;
-    const sceneTop  = (innerHeight - H * s) / 2;
+    const left = (innerWidth  - W * s) / 2;
+    const top  = (innerHeight - H * s) / 2;
   
-    // 1) centre et scale les calques de la scène
     for (const el of [bg, screenLayer, fg]) {
       if (!el) continue;
       el.style.position = 'absolute';
       el.style.transformOrigin = '0 0';
       el.style.transform = `scale(${s})`;
-      el.style.left = sceneLeft + 'px';
-      el.style.top  = sceneTop  + 'px';
+      el.style.left = left + 'px';
+      el.style.top  = top  + 'px';
     }
-  
-    // 2) Centre les overlays par rapport à la scène (horizontalement)
-    centerOverlays(sceneLeft, sceneTop, s);
-  
-    // 3) Recalcule la position de l’écran (diapo) dans la scène
     if (typeof placeScreen === 'function') placeScreen();
   }
-  
-  // Centre les éléments UI par rapport à la scène
-  function centerOverlays(sceneLeft, sceneTop, s){
-    // a) Titre et instructions : centrés au-dessus/au-dessous de la scène
-    const title = document.getElementById('titleImg');
-    if (title) {
-      // centré horizontalement par rapport à la scène
-      title.style.left = (sceneLeft + (W * s) / 2 - title.offsetWidth / 2) + 'px';
-      // garde ta marge verticale existante via CSS; sinon:
-      // title.style.top = (sceneTop + 12) + 'px';
-    }
-  
-    const inst = document.getElementById('instImg');
-    if (inst) {
-      inst.style.left = (sceneLeft + (W * s) / 2 - inst.offsetWidth / 2) + 'px';
-      // inst.style.top  = (sceneTop + H * s + 12) + 'px'; // si tu veux sous la scène
-    }
-  }
+
 
   
   // ========= Écran & monde =========
