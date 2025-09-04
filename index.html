@@ -101,17 +101,16 @@
   }
 
   // Centre & applique le scale aux calques
-  function applyScale() {
-    const s = scale();
-    for (const el of [bg, screenLayer, fg]) {
-      if (!el) continue;                 // si un calque manque, on skip
+  function applyScale(){
+    const zoom = 1.20; // ← zoom global (20%), change à 1.25 pour +25%, etc.
+    const s = scale() * zoom;
+  
+    for(const el of [bg, screenLayer, fg]){
+      if(!el) continue;
       el.style.transform = `scale(${s})`;
-      el.style.left = ((innerWidth  - W * s) / 2) + 'px';
-      el.style.top  = ((innerHeight - H * s) / 2) + 'px';
-      el.style.position = 'absolute';    // sécurité si pas déjà en absolute
-      el.style.transformOrigin = '0 0';  // ancrage en haut-gauche (cohérent avec ton code)
+      el.style.left = ((innerWidth - W*s)/2)+'px';
+      el.style.top  = ((innerHeight - H*s)/2)+'px';
     }
-    // si tu as une fonction placeScreen() ailleurs, on la rappelle
     if (typeof placeScreen === 'function') placeScreen();
   }
 
