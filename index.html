@@ -288,58 +288,6 @@ function placeScreen(){
   el.style.transform = `translate(var(--tx), var(--ty)) rotate(-3.6deg) skew(2deg,0)`;
 }
 
-// ---- FORCE ZOOM GLOBAL (fonctionne même si d'autres scripts scalent déjà) ----
-  (function () {
-    // Dimensions de référence de ta scène
-    const W = 480, H = 270;
-
-    // Récupération des calques connus (existe dans ton projet)
-    const bg          = document.getElementById('bg');
-    const fg          = document.getElementById('fg');
-    const screenLayer = document.getElementById('screenLayer');
-
-    // Ensemble des éléments à zoomer (ajoute-en si besoin)
-    const LAYERS = [bg, screenLayer, fg].filter(Boolean);
-
-    // ---- Choix d'échelle : "cover" sur mobile + boost, "contain" sur desktop ----
-    function computeScale() {
-      const contain = Math.min(innerWidth / W, innerHeight / H);
-      const cover   = Math.max(innerWidth / W, innerHeight / H);
-      const isMobile = (innerWidth <= 768) || matchMedia("(pointer:coarse)").matches;
-
-      // Objectif demandé: site au moins +20% sur mobile → on prend cover * 1.20
-      return isMobile ? (cover * 1.20) : contain;
-    }
-
-    // ---- Application du scale, centrage, et rappel éventuel de placeScreen() ----
-    function applyForcedZoom() {
-      const s = computeScale();
-      for (const el of LAYERS) {
-        el.style.position = 'absolute';
-        el.style.transformOrigin = '0 0';
-        el.style.transform = `scale(${s})`;
-        el.style.left = ((innerWidth  - W * s) / 2) + 'px';
-        el.style.top  = ((innerHeight - H * s) / 2) + 'px';
-      }
-      if (typeof window.placeScreen === 'function') window.placeScreen();
-    }
-
-    // On s'assure d'exécuter APRÈS les autres écouteurs potentiels
-    function applyNowAndAfter() {
-      applyForcedZoom();
-      // repasse une fois à la frame suivante pour écraser un éventuel setTimeout d'un autre script
-      requestAnimationFrame(applyForcedZoom);
-      setTimeout(applyForcedZoom, 0);
-    }
-
-    window.addEventListener('load',   applyNowAndAfter);
-    window.addEventListener('resize', applyNowAndAfter);
-
-    // Appel immédiat au cas où le script est injecté après le load
-    applyNowAndAfter();
-  })();
-
-
 </script>
 
 
