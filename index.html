@@ -110,7 +110,7 @@ const SPRITES={"Up": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAgCAYA
 
 <script>
   
-const W=480,H=270,DPR=2;
+const W=480, H=270, DPR=(window.devicePixelRatio||1);
 const bg=document.getElementById('bg'),b=bg.getContext('2d');
 const fg=document.getElementById('fg'),x=fg.getContext('2d');
 b.setTransform(DPR,0,0,DPR,0,0); x.setTransform(DPR,0,0,DPR,0,0);
